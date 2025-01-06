@@ -8,6 +8,15 @@ import (
 
 var cache = make(map[string]string)
 
+func redirect(w http.ResponseWriter, r *http.Request) {
+	shortURL := r.PathValue("url")
+	if longURL, exists := cache[shortURL]; exists {
+		http.Redirect(w, r, longURL, http.StatusFound)
+	} else {
+		http.NotFound(w, r)
+	} 
+}
+
 func short(w http.ResponseWriter, r *http.Request) {
 	longURL := r.FormValue("longURL")
 
@@ -25,6 +34,7 @@ func short(w http.ResponseWriter, r *http.Request) {
 func main() {
 	mux := http.NewServeMux()
 
+	mux.HandleFunc("/api/v1/redirect/{url}", redirect)
 	mux.HandleFunc("/api/v1/short", short)
 
 	http.ListenAndServe(":8080", mux)
