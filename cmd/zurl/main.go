@@ -4,6 +4,8 @@ import (
 	"crypto/sha256"
     "encoding/hex"
     "net/http"
+
+	"github.com/joho/godotenv"
 )
 
 var cache = make(map[string]string)
@@ -32,6 +34,8 @@ func short(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	_ := godotenv.Load()
+
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/api/v1/redirect/{url}", redirect)
