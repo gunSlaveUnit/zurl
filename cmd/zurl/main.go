@@ -1,22 +1,30 @@
 package main
 
 import (
+	"context"
 	"crypto/sha256"
     "encoding/hex"
     "net/http"
+	"os"
+	"strconv"
 
 	"github.com/joho/godotenv"
+	"github.com/redis/go-redis/v9"
 )
 
-var cache = make(map[string]string)
+var (
+	ctx = context.Background()
+	cache *redis.Client
+)
 
 func redirect(w http.ResponseWriter, r *http.Request) {
 	shortURL := r.PathValue("url")
-	if longURL, exists := cache[shortURL]; exists {
+	longURL, err := cache.Get(ctx, shortURL).Result()
+	if err == nil {
 		http.Redirect(w, r, longURL, http.StatusFound)
 	} else {
 		http.NotFound(w, r)
-	} 
+	}
 }
 
 func short(w http.ResponseWriter, r *http.Request) {
@@ -28,13 +36,20 @@ func short(w http.ResponseWriter, r *http.Request) {
 
 	shortURL := hex.EncodeToString(hashed)[:6]
 
-	cache[shortURL] = longURL
+	cache.Set(ctx, shortURL, longURL, 0)
 
 	w.Write([]byte(shortURL))
 }
 
 func main() {
-	_ := godotenv.Load()
+	godotenv.Load()
+
+	cache_db, _ := strconv.Atoi(os.Getenv("CACHE_DB"))
+	cache = redis.NewClient(&redis.Options{
+        Addr: os.Getenv("CACHE_URL"),
+		DB: cache_db,
+        Password: os.Getenv("CACHE_PASSWORD"),
+    })
 
 	mux := http.NewServeMux()
 
