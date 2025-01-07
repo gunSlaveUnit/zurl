@@ -1,0 +1,38 @@
+x-service: &service
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "200m"
+      max-file: "5"
+  networks:
+    - zurl
+  restart: unless-stopped
+
+networks:
+  zurl:
+    external: true
+
+services:
+  back:
+    <<: *service
+    build:
+      context: ..
+      dockerfile: ./build/Dockerfile
+    container_name: back
+    env_file: ../.env
+    environment:
+      - CACHE_URL=cache:6379
+    ports:
+      - "8080:8080"
+  cache:
+    <<: *service
+    image: redis:7.4.2-alpine
+    container_name: cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - cache:/data
+
+volumes:
+  cache:
+    external: true
