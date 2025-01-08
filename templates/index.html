@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>zurl - URL shortener</title>
+  </head>
+
+  <body>
+    <form action="/api/v1/short" method="post">
+      <input type="text" name="url" placeholder="https://example.com" required>
+
+      <button type="submit">shorten</button>
+    </form>
+  </body>
+</html>
