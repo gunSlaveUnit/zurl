@@ -22,10 +22,19 @@
       <form action="/{{ .ShortURL }}" method="post">
         your shortened URL
 
-        <input type="text" name="shortURL" value="http://localhost:8080/{{ .ShortURL }}" readonly>
+        <input id="shortUrlInput" type="text" name="shortURL" value="http://localhost:8080/{{ .ShortURL }}" readonly>
 
         <button type="submit">check</button>
-      </div>
+        <button type="button" onclick="copyToClipboard()">copy</button>
+      </form>
     {{ end }}
+
+    <script>
+      function copyToClipboard() {
+          const copyText = document.getElementById("shortUrlInput");
+          copyText.select();
+          document.execCommand("copy");
+      }
+    </script>
   </body>
 </html>
