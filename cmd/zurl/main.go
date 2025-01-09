@@ -24,7 +24,13 @@ func redirect(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		http.Redirect(w, r, longURL, http.StatusFound)
 	} else {
-		http.NotFound(w, r)
+		t, _ := template.ParseFiles("templates/index.html")
+		data := map[string]interface{}{
+			"ShortURL": nil,
+			"Error": "short URL not found",
+		}
+
+		t.Execute(w, data)
 	}
 }
 
@@ -43,6 +49,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		t, _ := template.ParseFiles("templates/index.html")
 		data := map[string]interface{}{
 			"ShortURL": shortURL,
+			"Error": nil,
 		}
 
 		t.Execute(w, data)

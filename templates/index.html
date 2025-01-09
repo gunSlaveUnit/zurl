@@ -14,6 +14,10 @@
       <button type="submit">shorten</button>
     </form>
 
+    {{ if .Error }}
+      <div>{{ .Error }}</div>
+    {{ end }}
+
     {{ if .ShortURL }}
       <form action="/{{ .ShortURL }}" method="post">
         your shortened URL
