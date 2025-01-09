@@ -15,10 +15,12 @@
     </form>
 
     {{ if .ShortURL }}
-      <div>
+      <form action="/{{ .ShortURL }}" method="post">
         your shortened URL
 
-        <input type="text" value="{{ .ShortURL }}" readonly>
+        <input type="text" name="shortURL" value="http://localhost:8080/{{ .ShortURL }}" readonly>
+
+        <button type="submit">check</button>
       </div>
     {{ end }}
   </body>

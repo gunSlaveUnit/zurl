@@ -19,7 +19,7 @@ var (
 )
 
 func redirect(w http.ResponseWriter, r *http.Request) {
-	shortURL := r.PathValue("url")
+	shortURL := r.PathValue("shortURL")
 	longURL, err := cache.Get(ctx, shortURL).Result()
 	if err == nil {
 		http.Redirect(w, r, longURL, http.StatusFound)
@@ -42,7 +42,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 		t, _ := template.ParseFiles("templates/index.html")
 		data := map[string]interface{}{
-			"ShortURL": "http://localhost:8080/" + shortURL,
+			"ShortURL": shortURL,
 		}
 
 		t.Execute(w, data)
@@ -67,7 +67,7 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", home)
-	mux.HandleFunc("/api/v1/redirect/{url}", redirect)
+	mux.HandleFunc("/{shortURL}", redirect)
 
 	http.ListenAndServe(":8080", mux)
 }
