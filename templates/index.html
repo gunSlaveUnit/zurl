@@ -8,10 +8,18 @@
   </head>
 
   <body>
-    <form action="/api/v1/short" method="post">
-      <input type="text" name="url" placeholder="https://example.com" required>
+    <form action="" method="post">
+      <input type="text" name="longURL" placeholder="https://example.com" required>
 
       <button type="submit">shorten</button>
     </form>
+
+    {{ if .ShortURL }}
+      <div>
+        your shortened URL
+
+        <input type="text" value="{{ .ShortURL }}" readonly>
+      </div>
+    {{ end }}
   </body>
 </html>

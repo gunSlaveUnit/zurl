@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/sha256"
     "encoding/hex"
+	"html/template"
     "net/http"
 	"os"
 	"strconv"
@@ -27,18 +28,30 @@ func redirect(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func short(w http.ResponseWriter, r *http.Request) {
-	longURL := r.FormValue("longURL")
+func home(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		longURL := r.FormValue("longURL")
 
-	hash := sha256.New()
-    hash.Write([]byte(longURL))
-    hashed := hash.Sum(nil)
+		hash := sha256.New()
+		hash.Write([]byte(longURL))
+		hashed := hash.Sum(nil)
 
-	shortURL := hex.EncodeToString(hashed)[:6]
+		shortURL := hex.EncodeToString(hashed)[:6]
 
-	cache.Set(ctx, shortURL, longURL, 0)
+		cache.Set(ctx, shortURL, longURL, 0)
 
-	w.Write([]byte(shortURL))
+		t, _ := template.ParseFiles("templates/index.html")
+		data := map[string]interface{}{
+			"ShortURL": "http://localhost:8080/" + shortURL,
+		}
+
+		t.Execute(w, data)
+	}
+	
+	if r.Method == "GET" {
+		t, _ := template.ParseFiles("templates/index.html")
+		t.Execute(w, nil)
+	}
 }
 
 func main() {
@@ -53,8 +66,8 @@ func main() {
 
 	mux := http.NewServeMux()
 
+	mux.HandleFunc("/", home)
 	mux.HandleFunc("/api/v1/redirect/{url}", redirect)
-	mux.HandleFunc("/api/v1/short", short)
 
 	http.ListenAndServe(":8080", mux)
 }
