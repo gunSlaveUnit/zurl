@@ -1,0 +1,27 @@
+body, html {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+}
+
+button {
+  width: 100%;
+}
+
+footer {
+  text-align: center;
+}
+
+main {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+}
