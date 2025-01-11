@@ -22,21 +22,23 @@
         </div>
       </form>
       
-      <form action="/{{ .ShortURL }}" method="post">
-        <input id="shortUrlInput" type="text" {{ if not .ShortURL }} placeholder="cutted URL will be here" {{ end }}  {{ if .ShortURL }} value="http://localhost:8080/{{ .ShortURL }}" {{ end }} name="shortURL" readonly />
+      {{ if .ShortURL }}
+        <form action="/{{ .ShortURL }}" method="post">
+          <input id="shortUrlInput" type="text" {{ if not .ShortURL }} placeholder="cutted URL will be here" {{ end }}  {{ if .ShortURL }} value="http://localhost:8080/{{ .ShortURL }}" {{ end }} name="shortURL" readonly />
 
-        <div class="menu">
-          <button type="submit">
-            <img class="icon" src="/static/icons/go.svg" alt="icon"/>
-            go
-          </button>
+          <div class="menu">
+            <button type="submit">
+              <img class="icon" src="/static/icons/go.svg" alt="icon"/>
+              go
+            </button>
 
-          <button type="button" onclick="copyToClipboard()">
-            <img class="icon" src="/static/icons/copy.svg" alt="icon"/>
-            copy
-          </button>
-        </div>
-      </form>
+            <button type="button" onclick="copyToClipboard()">
+              <img class="icon" src="/static/icons/copy.svg" alt="icon"/>
+              copy
+            </button>
+          </div>
+        </form>
+      {{ end }}
 
       {{ if .Error }}
         <div>{{ .Error }}</div>
