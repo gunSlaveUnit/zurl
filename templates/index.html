@@ -12,7 +12,7 @@
   <body>
     <main>
       <form action="/" method="post">
-        <input type="text" name="longURL" placeholder="long url like https://example.com" required>
+        <input type="text" name="longURL" placeholder="long url like https://example.com" required />
   
         <div class="menu">
           <button type="submit">
@@ -23,7 +23,7 @@
       </form>
       
       <form action="/{{ .ShortURL }}" method="post">
-        <input id="shortUrlInput" type="text" {{ if not .ShortURL }} placeholder="cutted URL will be here" {{ end }}  {{ if .ShortURL }} value="http://localhost:8080/{{ .ShortURL }}" {{ end }} name="shortURL" readonly>
+        <input id="shortUrlInput" type="text" {{ if not .ShortURL }} placeholder="cutted URL will be here" {{ end }}  {{ if .ShortURL }} value="http://localhost:8080/{{ .ShortURL }}" {{ end }} name="shortURL" readonly />
 
         <div class="menu">
           <button type="submit">
