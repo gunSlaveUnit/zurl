@@ -23,8 +23,8 @@ button {
   width: 100%;
 }
 
-form {
-  margin: 16px;
+form:first-of-type {
+  margin-bottom: 32px;
 }
 
 footer {
