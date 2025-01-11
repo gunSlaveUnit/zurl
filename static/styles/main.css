@@ -14,7 +14,6 @@ body, html {
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin: 0;
 }
 
 button {
@@ -23,8 +22,12 @@ button {
   width: 100%;
 }
 
-form:first-of-type {
-  margin-bottom: 32px;
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+  max-width: 400px;
+  width: 100%;
 }
 
 footer {
@@ -33,7 +36,6 @@ footer {
 
 input {
   border-radius: 4px;
-  width: 400px;
 }
 
 main {
