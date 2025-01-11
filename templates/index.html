@@ -15,7 +15,10 @@
         <input type="text" name="longURL" placeholder="long url like https://example.com" required>
   
         <div class="menu">
-          <button type="submit">shorten</button>
+          <button type="submit">
+            <img class="icon" src="/static/icons/cut.svg" alt="icon"/>
+            shorten
+          </button>
         </div>
       </form>
       
@@ -23,8 +26,15 @@
         <input id="shortUrlInput" type="text" {{ if not .ShortURL }} placeholder="cutted URL will be here" {{ end }}  {{ if .ShortURL }} value="http://localhost:8080/{{ .ShortURL }}" {{ end }} name="shortURL" readonly>
 
         <div class="menu">
-          <button type="submit">check</button>
-          <button type="button" onclick="copyToClipboard()">copy</button>
+          <button type="submit">
+            <img class="icon" src="/static/icons/go.svg" alt="icon"/>
+            go
+          </button>
+
+          <button type="button" onclick="copyToClipboard()">
+            <img class="icon" src="/static/icons/copy.svg" alt="icon"/>
+            copy
+          </button>
         </div>
       </form>
 

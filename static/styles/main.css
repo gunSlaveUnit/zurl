@@ -21,6 +21,10 @@ button {
   width: 100%;
 }
 
+form:first-of-type {
+  margin-bottom: 16px;
+}
+
 footer {
   text-align: center;
 }
@@ -31,6 +35,12 @@ main {
   flex: 1;
   flex-direction: column;
   justify-content: center;
+}
+
+.icon {
+  height: 24px;
+  vertical-align: middle;
+  width: 24px;
 }
 
 .menu {
