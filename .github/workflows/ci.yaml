@@ -1,7 +1,10 @@
 name: main
 
 on:
-  branches: []
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
 
 jobs:
   publish:
