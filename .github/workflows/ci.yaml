@@ -2,11 +2,18 @@ name: main
 
 on:
   push:
-    branches: [ "*" ]
-  pull_request:
-    branches: [ "*" ]
+    tags:
+      - '*'
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: build
+        run: |
+          docker build -f build/Dockerfile -t ${{ secrets.CI_REGISTRY_USER }}/zurl:${{ github.ref_name }} .
+
   publish:
     runs-on: ubuntu-latest
     steps:
@@ -14,3 +21,6 @@ jobs:
       - name: login
         run: |
           echo ${{ secrets.CR_PAT }} | docker login ${{ secrets.CI_REGISTRY }} -u ${{ secrets.CI_REGISTRY_USER }} --password-stdin
+      - name: push
+        run: |
+          docker push ${{ secrets.CI_REGISTRY_USER }}/zurl:${{ github.ref_name }}
