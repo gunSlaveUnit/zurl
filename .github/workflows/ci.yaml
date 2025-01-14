@@ -1,0 +1,13 @@
+name: main
+
+on:
+  branches: []
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: login
+        run: |
+          echo ${{ secrets.CR_PAT }} | docker login ${{ secrets.CI_REGISTRY }} -u ${{ secrets.CI_REGISTRY_USER }} --password-stdin

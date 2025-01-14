@@ -27,7 +27,7 @@ commands
 
     manual
       back
-        download dependencies:
+        download dependencies
           go mod download
 
         build
