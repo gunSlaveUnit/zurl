@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: build
         run: |
-          docker build -f build/Dockerfile -t ${{ secrets.CI_REGISTRY_USER }}/${{ secrets.CI_REGISTRY }}/zurl:${{ github.ref_name }} .
+          docker build -f build/Dockerfile -t ${{ secrets.CI_REGISTRY }}/${{ secrets.CI_REGISTRY_USER }}/zurl:${{ github.ref_name }} .
       - name: login
         run: |
           echo ${{ secrets.CR_PAT }} | docker login ${{ secrets.CI_REGISTRY }} -u ${{ secrets.CI_REGISTRY_USER }} --password-stdin
