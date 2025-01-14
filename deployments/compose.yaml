@@ -24,6 +24,7 @@ services:
       - CACHE_URL=cache:6379
     ports:
       - "8080:8080"
+
   cache:
     <<: *service
     image: redis:7.4.2-alpine
